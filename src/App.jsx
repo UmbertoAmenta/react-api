@@ -1,15 +1,24 @@
 import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function App() {
   const [formData, setFormData] = useState({
-    id: 1,
+    id: "",
     title: "",
     content: "",
-    author: "",
-    sector: "",
-    published: false,
+    image: "",
+    tags: [],
   });
   const [list, setList] = useState([]);
+
+  const fetchPosts = () => {
+    axios.get("http://localhost:3000/posts").then(function (response) {
+      setFormData(response.data);
+    });
+  };
+
+  useEffect(fetchPosts, []);
 
   const handleSubmit = (event, id) => {
     event.preventDefault();
@@ -21,12 +30,11 @@ export default function App() {
     // setList((current) => [...current, formData]);
 
     setFormData({
-      id: 1,
+      id: "",
       title: "",
       content: "",
-      author: "",
-      sector: "",
-      published: false,
+      image: "",
+      tags: [],
     });
   };
 
@@ -53,13 +61,10 @@ export default function App() {
           {list.map((post, id) => {
             return (
               <li key={id}>
-                <span>
-                  {post.title} - {post.author} - {post.sector}
-                </span>
-                <div>
-                  {post.published ? post.content : "Contenuto non pubblicato"}
-                </div>
-
+                <span>{post.title}</span>
+                <div>{post.content}</div>
+                <img src={post.image} alt="" />
+                <div>{post.tags}</div>
                 <button onClick={() => deletePost(id)}>🗑️</button>
               </li>
             );
@@ -69,7 +74,6 @@ export default function App() {
           <button type="button" onClick={deleteList}>
             Svuota lista
           </button>
-
           <label htmlFor="postTitle">Titolo</label>
           <input
             id="postTitle"
@@ -94,19 +98,19 @@ export default function App() {
             }}
           />
 
-          <label htmlFor="postAuthor">Autore</label>
+          <label htmlFor="postimage">Immagine</label>
           <input
-            id="postAuthor"
+            id="postimage"
             type="text"
             placeholder="..."
-            value={formData.author}
-            required
+            value={formData.image}
+            // required
             onChange={(event) => {
-              handlerFormData("author", event.target.value);
+              handlerFormData("image", event.target.value);
             }}
           />
 
-          <label htmlFor="postSector">Settore</label>
+          {/* <label htmlFor="postSector">Settore</label>
           <select
             name="postSector"
             id="postSector"
@@ -122,17 +126,7 @@ export default function App() {
             <option value="frontEnd">FrontEnd</option>
             <option value="backEnd">BackEnd</option>
             <option value="design">UI/UX</option>
-          </select>
-
-          <label htmlFor="postVisibility">Da pubblicare</label>
-          <input
-            id="postVisibility"
-            type="checkbox"
-            checked={formData.published}
-            onChange={(event) => {
-              handlerFormData("published", event.target.checked);
-            }}
-          />
+          </select> */}
 
           <button type="submit">
             <strong>+</strong> Nuovo post
