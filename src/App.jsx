@@ -2,19 +2,20 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
+const initialData = {
+  title: "",
+  content: "",
+  image: "",
+  tags: [],
+};
+
 export default function App() {
-  const [formData, setFormData] = useState({
-    id: "",
-    title: "",
-    content: "",
-    image: "",
-    tags: [],
-  });
+  const [formData, setFormData] = useState(initialData);
   const [list, setList] = useState([]);
 
   const fetchPosts = () => {
     axios.get("http://localhost:3000/posts").then(function (response) {
-      setFormData(response.data);
+      setList(response.data);
     });
   };
 
@@ -30,7 +31,6 @@ export default function App() {
     // setList((current) => [...current, formData]);
 
     setFormData({
-      id: "",
       title: "",
       content: "",
       image: "",
@@ -47,33 +47,44 @@ export default function App() {
   };
 
   const handlerFormData = (field, value) => {
-    setFormData((formData) => ({
-      ...formData,
-      [field]: value,
-    }));
+    setFormData((currentFormData) => {
+      console.log(currentFormData);
+      return { ...currentFormData, [field]: value };
+    });
   };
 
   return (
     <div className="container">
-      <h2>Blog in costruzione</h2>
+      <h2>Le ricette di nonna</h2>
       <div>
         <ul>
           {list.map((post, id) => {
             return (
               <li key={id}>
-                <span>{post.title}</span>
-                <div>{post.content}</div>
-                <img src={post.image} alt="" />
-                <div>{post.tags}</div>
-                <button onClick={() => deletePost(id)}>🗑️</button>
+                <span>{post.titolo || post.title}</span>
+                <button type="button" onClick={() => deletePost(id)}>
+                  🗑️
+                </button>
+                <br />
+                <img
+                  src={"http://localhost:3000/" + post.immagine || post.image}
+                  alt={post.titolo || post.title}
+                />
+                <div className="description">
+                  {post.contenuto || post.content}
+                </div>
+                {console.log("http://localhost:3000/" + post.immagine)}
+                {/* {console.log(post.immagine)} */}
+                {/* <div>{post.tags || ""}</div> */}
               </li>
             );
           })}
         </ul>
         <form onSubmit={handleSubmit}>
           <button type="button" onClick={deleteList}>
-            Svuota lista
+            Svuota ricettario
           </button>
+
           <label htmlFor="postTitle">Titolo</label>
           <input
             id="postTitle"
@@ -129,7 +140,7 @@ export default function App() {
           </select> */}
 
           <button type="submit">
-            <strong>+</strong> Nuovo post
+            <strong>+</strong> Aggiungi Ricetta
           </button>
         </form>
       </div>

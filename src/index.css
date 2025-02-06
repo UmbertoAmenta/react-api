@@ -5,9 +5,14 @@
   padding: 0;
 }
 
+/* GENERAL */
+body {
+  background-image: url("https://www.creativefabrica.com/wp-content/uploads/2024/06/25/Vintage-Kitchen-Counter-Background-Graphics-100379210-1.jpeg");
+}
+
 /* BLOG */
 .container {
-  max-width: 700px;
+  max-width: 1100px;
   margin: auto;
 }
 
@@ -16,13 +21,48 @@
   flex-direction: row-reverse;
 }
 
-ul,
 form {
-  width: calc(100% / 2);
+  width: calc(100% / 6);
 }
 
 ul {
   margin-bottom: 25px;
+  width: calc((100% / 6) * 5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 25px;
+}
+
+ul li {
+  list-style: none;
+  width: calc(100% / 4);
+  padding: 15px;
+  background-color: white;
+}
+
+ul li img {
+  width: 100%;
+}
+
+ul li .description {
+  height: 100px;
+  overflow-y: hidden;
+  padding-right: 5px;
+}
+
+ul li .description:hover {
+  overflow-y: auto;
+}
+
+ul li [type="button"] {
+  border-radius: 25px;
+  font-size: 12px;
+  padding: 5px;
+}
+
+li div:last-child {
+  border-style: groove;
 }
 
 h2 {
@@ -54,8 +94,4 @@ form input {
 
 .container [type="button"] {
   border-color: red;
-}
-
-li {
-  list-style: inside;
 }
