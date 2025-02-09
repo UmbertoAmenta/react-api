@@ -8,6 +8,8 @@
 /* GENERAL */
 body {
   background-image: url("https://www.creativefabrica.com/wp-content/uploads/2024/06/25/Vintage-Kitchen-Counter-Background-Graphics-100379210-1.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* BLOG */
@@ -32,17 +34,25 @@ ul {
   flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 25px;
+  /* overflow-y: scroll; */
 }
 
 ul li {
   list-style: none;
   width: calc(100% / 4);
   padding: 15px;
-  background-color: white;
+  background-image: url("https://static4.depositphotos.com/1006137/325/i/450/depositphotos_3257537-stock-photo-grunge-background.jpg://i.pinimg.com/originals/2c/1f/2b/2c1f2b716cc9eee69b7ac1cead9fc2c4.jpg");
+  background-size: contain;
+  box-shadow: 40px 40px 30px rgba(0, 0, 0, 0.05);
+}
+
+ul li .imgSlot {
+  aspect-ratio: 4/3;
 }
 
 ul li img {
   width: 100%;
+  object-fit: cover;
 }
 
 ul li .description {
@@ -62,7 +72,8 @@ ul li [type="button"] {
 }
 
 li div:last-child {
-  border-style: groove;
+  display: flex;
+  justify-content: space-between;
 }
 
 h2 {
